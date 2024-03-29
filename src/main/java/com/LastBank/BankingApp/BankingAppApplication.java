@@ -6,27 +6,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class BankingAppApplication implements CommandLineRunner {
+public class BankingAppApplication {
 
-    private final ClientRepository clientRepository;
-	@Autowired
-	public BankingAppApplication(ClientRepository clientRepository) {
-		this.clientRepository = clientRepository;
-	}
 
 	public static void main(String[] args) {
 
 		SpringApplication.run(BankingAppApplication.class, args);
 	}
+    @Bean
+	public CommandLineRunner commandLineRunner (
+			ClientRepository clientRepository
+	){
+		return args -> {
+           var client = Client.builder()
+				   .name("nadia")
+				   .email("jazinadia7@gmail.com")
+				   .build();
+		      clientRepository.save(client);
 
-	@Override
-	public void run(String... arg) throws Exception {
-        Client c1=clientRepository.save(new Client("Nadia","jazinadia7@gmail.com"));
-		Client c2=clientRepository.save(new Client("Amani","jaziamani@gmail.com"));
-		Client c3=clientRepository.save(new Client("Amal","daknouamal@gmail.com"));
-		Client c4=clientRepository.save(new Client("hichem","jazihichem@gmail.com"));
-
+		   var client1 = Client.builder()
+				   .name("amal")
+				   .email("amaldaknou@gmail.com")
+				   .build();
+		   clientRepository.save(client1);
+		};
 	}
+
+
+
 }
