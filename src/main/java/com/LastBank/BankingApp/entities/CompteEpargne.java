@@ -2,17 +2,16 @@ package com.LastBank.BankingApp.entities;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @DiscriminatorValue("CE")
+@SuperBuilder
+@Entity
+@EqualsAndHashCode(callSuper = true)
 public class CompteEpargne extends Account{
     private double taux;
 }
