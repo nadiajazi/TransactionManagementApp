@@ -10,5 +10,5 @@ public interface AccountRepository extends JpaRepository<Account,String> {
     @Override
     <S extends Account> Optional<S> findOne(Example<S> example);
 
-    Account findOne(String codeCpte);
+    Optional<Account> findOneByCodeCompte(String codeCompte);
 }

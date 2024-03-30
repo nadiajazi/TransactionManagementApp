@@ -9,6 +9,7 @@ import com.LastBank.BankingApp.entities.Client;
 import com.LastBank.BankingApp.entities.CompteCourant;
 import com.LastBank.BankingApp.entities.CompteEpargne;
 import com.LastBank.BankingApp.entities.Retrait;
+import com.LastBank.BankingApp.services.BankService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -31,7 +32,8 @@ public class BankingAppApplication {
 			ClientRepository clientRepository,
 			CompteCourantRepository compteCourantRepository,
 			CompteEpargneRepository compteEpargneRepository,
-			RetraitRepository retraitRepository
+			RetraitRepository retraitRepository,
+			BankService bankService
 	){
 		return args -> {
            var client = Client.builder()
@@ -53,7 +55,7 @@ public class BankingAppApplication {
 				   .balance(500.0)
 				   .client(client1)
 				   .dateCreation(LocalDateTime.now())
-				   .codeCompte("110501")
+				   .codeCompte("1105010")
 				   .decouvert(200.0)
 				   .build();
 			compteCourantRepository.save(compteCourant);
@@ -85,6 +87,8 @@ public class BankingAppApplication {
 					.build();
 					retraitRepository.save(retrait);
 
+
+            bankService.verser("110501",50.0);
 		};
 
 		}
