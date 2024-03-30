@@ -21,6 +21,6 @@ public class Client {
     @OneToMany(mappedBy = "client",fetch=FetchType.LAZY)
     private Collection<Account> accounts;
 
-    public Client(String nadia, String mail) {
+    public Client(String name, String mail) {
     }
 }
