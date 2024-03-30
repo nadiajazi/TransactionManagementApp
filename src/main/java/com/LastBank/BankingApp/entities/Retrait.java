@@ -7,6 +7,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
+
 
 @NoArgsConstructor
 @Entity
@@ -15,4 +17,6 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class Retrait extends Operation{
 
+    public Retrait(LocalDateTime now, double montant, Account account) {
+    }
 }
