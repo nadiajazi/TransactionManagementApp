@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="template1">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ma Banque</title>
+    <meta charset="UTF-8"/>
+    <title>Votre Banque</title>
+    <!-- Ensure Bootstrap 4 CSS is included -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 
-<body style="padding-bottom: 70px;">
-
+<body>
 <header>
-    <!-- Corrected Bootstrap 4 Navbar -->
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Votre Banque</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,35 +32,13 @@
     </nav>
 </header>
 
-<section layout:fragment="content" class="py-3 ">
-    <!-- Include the content of compte.html directly here -->
-    <div class="row">
-        <div class="col-md-5">
-            <!-- Card for "Consulter votre compte" -->
-            <div class="card">
-                <div class="card-header bg-primary text-white">Consultation d'un compte</div>
-                <div class="card-body">
-                    <!-- Add your content for "Consulter votre compte" here -->
-                    <p class="card-text">Some details about the account...</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <!-- Optional: Additional content for the second column -->
-        </div>
-    </div>
-</section>
+<!-- Content fragment -->
+<section layout:fragment="content"></section>
 
-<footer class="fixed-bottom">
-    <div class="footer py-3 bg-light">
-        <div class="container">
-            <span class="text-muted">@L'adresse de votre banque</span>
-        </div>
-    </div>
-</footer>
-
+<!-- Bootstrap and dependencies scripts -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>
