@@ -1,6 +1,7 @@
 package com.LastBank.BankingApp.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,15 +13,16 @@ import jakarta.persistence.Id;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @SuperBuilder
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Table(name = "accounts")
 @DiscriminatorColumn(name = "TYPE_CPTE", discriminatorType = DiscriminatorType.STRING, length = 2)
-public abstract class Account {
+public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(name = "num_compte")
     private String numCompte;

@@ -79,6 +79,17 @@ public class BankingAppApplication {
 					.build();
 			compteEpargneRepository.save(compteEpargne);
 
+			CompteEpargne compteEpargne1 = CompteEpargne.builder()
+					.numCompte("124")
+					.holderAccountName("Amani")
+					.balance(500.0)
+					.client(client1)
+					.dateCreation(LocalDateTime.now())
+					.codeCompte("c1")
+					.taux(200.0)
+					.build();
+			compteEpargneRepository.save(compteEpargne1);
+
 			var retrait = Retrait.builder()
 					.numOpertion(1L)
 					.dateOperation(LocalDateTime.now())
