@@ -6,9 +6,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface AccountRepository extends JpaRepository<Account,String> {
-    @Override
-    <S extends Account> Optional<S> findOne(Example<S> example);
+public interface AccountRepository extends JpaRepository<Account,Integer> {
 
-    Optional<Account> findOneByCodeCompte(String codeCompte);
+
+    Optional<Account> findById(Long id);
+    Account findOneByCodeCompte(String codeCompte);
+
 }

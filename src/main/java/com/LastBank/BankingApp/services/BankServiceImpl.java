@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -26,17 +27,12 @@ public class BankServiceImpl implements BankService{
         this.accountRepository = accountRepository;
     }
 
-    @Override
-    public Account consulterCompte(String codeCompte) {
-        Optional<Account> optionalAccount = accountRepository.findOneByCodeCompte(codeCompte);
-        Account account = optionalAccount.orElseThrow(() -> new RuntimeException("Compte introuvable"));
 
-        return account;
-    }
+
 
     @Override
     public void verser(String codeCompte, double montant) {
-       Account account = consulterCompte(codeCompte);
+       Account account = consulterCompteByCode(codeCompte);
        Versement v = new Versement(LocalDateTime.now(),montant,account);
        operationRepository.save(v);
        account.setBalance(account.getBalance()+montant);
@@ -44,7 +40,7 @@ public class BankServiceImpl implements BankService{
     }
 
     @Override
-    public void retirer(String codeCompte, double montant) {Account account = consulterCompte(codeCompte);
+    public void retirer(String codeCompte, double montant) {Account account = consulterCompteByCode(codeCompte);
         double facilityCaisse=0;
         if (account instanceof CompteCourant)
             facilityCaisse=((CompteCourant) account).getDecouvert();
@@ -59,11 +55,49 @@ public class BankServiceImpl implements BankService{
     @Override
     public void virement(String codeCompte1, String codeCompte2, double montant) {
        retirer(codeCompte1,montant);
-       retirer(codeCompte2,montant );
+       verser(codeCompte2,montant );
     }
 
     @Override
     public Page<Operation> listOperation(String codeCompte, int page, int size) {
         return operationRepository.listOperation(codeCompte, PageRequest.of(page, size, Sort.unsorted()));
+    }
+
+    @Override
+    public Account consulterCompteById(Integer accountId) {
+        Optional<Account> optionalAccount = accountRepository.findById(accountId);
+        return optionalAccount.orElse(null);
+    }
+
+    @Override
+    public Account consulterCompteByCode(String codeCompte) {
+        return accountRepository.findOneByCodeCompte(codeCompte);
+
+    }
+    @Override
+    public List<Account> getAllAccounts(){
+     return accountRepository.findAll() ;
+    }
+
+    @Override
+    public void saveAccount (Account account){
+        this.accountRepository.save(account);
+    }
+
+    @Override
+    public Account getAccountById(Integer id){
+        Optional <Account> optional = accountRepository.findById(id);
+        Account account = null;
+        if (optional.isPresent()) {
+            account = optional.get();
+        }else{
+          throw new RuntimeException("account not found with id:: " +id);
+        }
+        return account;
+    }
+
+    @Override
+    public void deleteAccountById(Integer id) {
+        this.accountRepository.deleteById(id);
     }
 }
