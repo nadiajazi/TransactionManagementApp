@@ -13,8 +13,8 @@ import java.util.Collection;
 @Builder
 public class Client {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue
+    private Integer id;
     private Long code;
     private String name;
     private String email;

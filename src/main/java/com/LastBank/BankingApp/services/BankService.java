@@ -18,7 +18,7 @@ public interface BankService {
     public Page<Operation> listOperation(String codeCpte, int page, int size);
     List<Account> getAllAccounts();
 
-    void saveAccount(Account account);
+    void saveAccount(Account account, String accountType);
 
     Account getAccountById(Integer id);
 
