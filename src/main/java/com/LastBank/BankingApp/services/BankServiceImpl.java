@@ -1,6 +1,8 @@
 package com.LastBank.BankingApp.services;
 
 import com.LastBank.BankingApp.dao.AccountRepository;
+import com.LastBank.BankingApp.dao.CompteCourantRepository;
+import com.LastBank.BankingApp.dao.CompteEpargneRepository;
 import com.LastBank.BankingApp.dao.OperationRepository;
 import com.LastBank.BankingApp.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,14 @@ public class BankServiceImpl implements BankService{
     @Autowired
     private final OperationRepository operationRepository;
     private final AccountRepository accountRepository;
+    private final CompteCourantRepository compteCourantRepository;
+    private final CompteEpargneRepository compteEpargneRepository;
     @Autowired
-    public BankServiceImpl(OperationRepository operationRepository, AccountRepository accountRepository) {
+    public BankServiceImpl(OperationRepository operationRepository, AccountRepository accountRepository, CompteEpargneRepository compteEpargneRepository, CompteCourantRepository compteCourantRepository) {
         this.operationRepository = operationRepository;
         this.accountRepository = accountRepository;
+        this.compteCourantRepository = compteCourantRepository;
+        this.compteEpargneRepository = compteEpargneRepository;
     }
 
 
@@ -79,10 +85,43 @@ public class BankServiceImpl implements BankService{
      return accountRepository.findAll() ;
     }
 
+
     @Override
-    public void saveAccount (Account account){
-        this.accountRepository.save(account);
+    public void saveAccount(Account account, String accountType) {
+        if (accountType.equals("CC")) {
+            CompteCourant compteCourant;
+            if (account instanceof CompteCourant) {
+                compteCourant = (CompteCourant) account;
+            } else {
+                compteCourant = new CompteCourant();
+                mapAccountProperties(account, compteCourant);
+            }
+            compteCourantRepository.save(compteCourant);
+        } else if (accountType.equals("CE")) {
+            CompteEpargne compteEpargne;
+            if (account instanceof CompteEpargne) {
+                compteEpargne = (CompteEpargne) account;
+            } else {
+                compteEpargne = new CompteEpargne();
+                mapAccountProperties(account, compteEpargne);
+            }
+            compteEpargneRepository.save(compteEpargne);
+        } else {
+            throw new IllegalArgumentException("Invalid account type");
+        }
     }
+
+
+    private void mapAccountProperties(Account source, Account target) {
+        target.setNumCompte(source.getNumCompte());
+        target.setHolderAccountName(source.getHolderAccountName());
+        target.setBalance(source.getBalance());
+        target.setDateCreation(source.getDateCreation());
+        target.setCodeCompte(source.getCodeCompte());
+        target.setClient(source.getClient());
+    }
+
+
 
     @Override
     public Account getAccountById(Integer id){

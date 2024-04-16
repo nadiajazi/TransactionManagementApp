@@ -4,6 +4,7 @@
 <head>
     <meta charset="ISO-8859-1">
     <title>Banking Management System</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 </head>
 
@@ -13,15 +14,48 @@
     <hr>
     <h2>Save Account</h2>
 
-    <form action="#" th:action="@{/saveAccount}" th:object="${account}" method="POST">
-        <input type="text" th:field="*{codeCompte}" placeholder="Account num" class="form-control mb-4 col-4">
+    <form action="#" th:action="@{/saveAccount}" th:object="${account}" method="post" class="mt-3">
+        <div class="form-group">
+            <label for="numCompte">Account Number</label>
+            <input type="text" class="form-control" id="numCompte" name="numCompte" th:value="*{numCompte}" placeholder="Enter account number">
+        </div>
 
-        <input type="text" th:field="*{holderAccountName}" placeholder="Zccount code" class="form-control mb-4 col-4">
+        <div class="form-group">
+            <label for="codeCompte">Account Code</label>
+            <input type="text" class="form-control" id="codeCompte" name="coeCompte" th:value="*{codeCompte}" placeholder="Enter account code">
+        </div>
 
-        <input type="text" th:field="*{numCompte }" placeholder="account name holder" class="form-control mb-4 col-4">
+        <div class="form-group">
+            <label for="holderAccountName">Account Holder Name</label>
+            <input type="text" class="form-control" id="holderAccountName" name="holderAccountName" th:value="*{holderAccountName}" placeholder="Enter holder name">
+        </div>
 
-        <button type="submit" class="btn btn-info col-2"> Save Account</button>
+        <div class="form-group">
+            <label for="balance">Balance</label>
+            <input type="number" step="0.01" class="form-control" id="balance" name="balance" th:value="*{balance}" placeholder="Enter balance">
+        </div>
+
+        <div class="form-group">
+            <label for="accountType">Account Type</label>
+            <select id="accountType" name="accountType" class="form-control">
+                <option value="CC">Compte Courant</option>
+                <option value="CE">Compte Epargne</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="client">Client</label>
+            <select id="client" name="client.id" class="form-control">
+                <option value="">Select Client</option>
+                <option th:each="client : ${clients}"
+                        th:value="${client.id}"
+                        th:text="${client.name}">Client Name</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+
 
     <hr>
 
